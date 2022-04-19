@@ -21,7 +21,7 @@ nlp_route = APIRouter(
 #Get polarity of phrase 
 
 @nlp_route.post('/')# <- Better Error Messages
-def process_phrase(req: PolarityReq, token: str | None = Header(None)):
+def process_phrase(req: PolarityReq, token: str or None = Header(None)):
     r = requests.post(f'{AUTH_ROUTE}/user/proceed', headers={'accept':'application/json', 'Authorization': f"Bearer {token}"})
     if r.status_code == 200:
         proc_out = requests.post(f"{CORE_ROUTE}/phrase/polarity", data=json.dumps({"phrase": req.phrase}))
