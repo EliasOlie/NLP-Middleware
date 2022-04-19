@@ -35,15 +35,15 @@ def create_new_user(user_req: CreateUser):
 
 #Read logged user
 
-@user_route.get('/', response_model=UserRead|None)
-def read_user(token: str | None = Header(None)):
+@user_route.get('/', response_model=UserRead or None)
+def read_user(token: str or None = Header(None)):
     r = requests.get(f'{AUTH_ROUTE}/user/', headers={'accept':'application/json', 'Authorization': f"Bearer {token}"})
     return JSONResponse(status_code=r.status_code, content=r.json())
 
 #Update logged user
 
 @user_route.put('/change')
-def update_user(user_input: UpdateUser, token: str | None = Header(None)):
+def update_user(user_input: UpdateUser, token: str or None = Header(None)):
     payload = json.dumps({
         "field": user_input.field,
         "value": user_input.value
@@ -55,14 +55,14 @@ def update_user(user_input: UpdateUser, token: str | None = Header(None)):
 #Delete logged user
 
 @user_route.get('/delete')
-def delete_user(token: str | None = Header(None)): #<- O frontend deve fazer a verificação se o desejo do usuário é realmente deletar e então deletar
+def delete_user(token: str or None = Header(None)): #<- O frontend deve fazer a verificação se o desejo do usuário é realmente deletar e então deletar
     r = requests.get(f'{AUTH_ROUTE}/user/delete',headers={'accept':'application/json', 'Authorization': f"Bearer {token}"})
     return JSONResponse(status_code=r.status_code, content=r.json())
     
 #Create Api_key for user    
 
 @user_route.get('/getkey')
-def generate_apikey(token: str | None = Header(None)):
+def generate_apikey(token: str or None = Header(None)):
     r = requests.get(f'{AUTH_ROUTE}/user/keys',headers={'accept':'application/json', 'Authorization': f"Bearer {token}"})
     return JSONResponse(status_code=r.status_code, content=r.json())
 
